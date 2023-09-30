@@ -1,21 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
-
-using namespace std;
-
-bool GameOver; // is game over or not
-
-const int height = 20; //board measurements 
-const int width = 40;  //board measurements 
-
-int x, y, fruitX, fruitY, score; // for coords
-
-int SnakeTailX[100], SnakeTailY[100];
-int nSnakeTail;
-
-enum Directions { STOP = 0, UP, DOWN, LEFT, RIGHT };
-Directions way;
+#include "main.h"
 
 void Initialize() {
 	GameOver = false;
@@ -29,16 +15,68 @@ void Initialize() {
 }
 
 void DrawBoard() {
+	system("cls");
+	for (int i = 0; i < width + 2; i++)
+	cout << "-";
+	cout << endl;
 
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (j == 0)
+				cout << "|";
+			if (i == y && j == x)
+				cout << "0";
+			else if (i == fruitY && j == fruitX)
+				cout << "o";
+			else
+			{
+				bool print = false;
+				for (int k = 0; k < nSnakeTail; k++) {
+
+					if (SnakeTailX[k] == j && SnakeTailY[k] == i) {
+						cout << "o";
+						print = true;
+					}
+				}
+				if (!print)
+					cout << " ";
+			}
+			if (j == width - 1)
+				cout << "|";
+		}
+		cout << endl;
+	}
+
+	for (int i = 0; i < width + 2; i++)
+	cout << "-";
+	cout << endl;
+	cout << "\nScore: " << score << endl;
 }
 
 void ProcessInput() {
-
+	if (_kbhit()) { //if keyboard key is pressed
+		switch (_getch()) {
+		case 'a':
+			way = LEFT;
+			break;
+		case 'd':
+			way = RIGHT;
+			break;
+		case 'w':
+			way = UP;
+			break;
+		case 's':
+			way = DOWN;
+			break;
+		case 'x':
+			GameOver = true;
+			break;
+		}
+	}
 }
 
 void UpdateGame() {
-
-
+	
 }
 
 int main() {
@@ -49,6 +87,7 @@ int main() {
 		DrawBoard();
 		ProcessInput();
 		UpdateGame();
+		Sleep(40);
 	}
 
 	return 0;
