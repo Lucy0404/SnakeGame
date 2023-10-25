@@ -1,27 +1,27 @@
+#include "GameEngine.h"
+#include <cstdlib>
 #include <iostream>
-#include <conio.h>
 #include <windows.h>
-#include "main.h"
+#include <conio.h>
 
-void Initialize() {
+using namespace std;
+
+GameEngine::GameEngine() : board(WIDTH, HEIGHT), snake(board.getHeight() / 2, board.getWidth() / 2) {
+	apple = Fruits(rand() % WIDTH, rand() % HEIGHT);
 	GameOver = false;
+
 	way = STOP;
 
-	y = height / 2;
-	x = width / 2;
-
-	fruitX = rand() % width;
-	fruitY = rand() % height;
 }
 
-void DrawBoard() {
+void GameEngine::DrawBoard() {
 	system("cls");
-	for (int i = 0; i < width + 2; i++)
+	for (int i = 0; i < board.getWidth() + 2; i++)
 		cout << "-";
 	cout << endl;
 
-	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++) {
+	for (int i = 0; i < board.getHeight(); i++) {
+		for (int j = 0; j < board.getWidth(); j++) {
 			if (j == 0)
 				cout << "|";
 			if (i == y && j == x)
@@ -41,19 +41,19 @@ void DrawBoard() {
 				if (!print)
 					cout << " ";
 			}
-			if (j == width - 1)
+			if (j == board.getWidth() - 1)
 				cout << "|";
 		}
 		cout << endl;
 	}
 
-	for (int i = 0; i < width + 2; i++)
+	for (int i = 0; i < board.getWidth() + 2; i++)
 		cout << "-";
 	cout << endl;
 	cout << "\nScore: " << score << endl;
 }
 
-void ProcessInput() {
+void GameEngine::ProcessInput() {
 	if (_kbhit()) { //if keyboard key is pressed
 		switch (_getch()) {
 		case 'a':
@@ -75,20 +75,6 @@ void ProcessInput() {
 	}
 }
 
-void UpdateGame() {
+void GameEngine::UpdateGame() {
 
-}
-
-int main() {
-
-	Initialize();
-
-	while (!GameOver) {
-		DrawBoard();
-		ProcessInput();
-		UpdateGame();
-		Sleep(40);
-	}
-
-	return 0;
 }
