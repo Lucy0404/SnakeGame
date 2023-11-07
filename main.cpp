@@ -79,7 +79,54 @@ void ProcessInput() {
 }
 
 void UpdateGame() {
+	int prevX = SnakeTailX[0];
+	int prevY = SnakeTailY[0];
+	int prev2X, prev2Y;
+	SnakeTailX[0] = x;
+	SnakeTailY[0] = y;
+	for (int i = 1; i < nSnakeTail; i++) {
+		prev2X = SnakeTailX[i];
+		prev2Y = SnakeTailY[i];
+		SnakeTailX[i] = prevX;
+		SnakeTailY[i] = prevY;
+		prevX = prev2X;
+		prevY = prev2Y;
+	}
 
+	switch (way) {
+	case LEFT:
+		x--;
+		break;
+	case RIGHT:
+		x++;
+		break;
+	case UP:
+		y--;
+		break;
+	case DOWN:
+		y++;
+		break;
+	default:
+		break;
+	}
+
+	if (x > width || x < 0 || y > height || y < 0) {
+		GameOver = true;
+	}
+
+	for (int i = 0; i < nSnakeTail; i++) {
+		if (SnakeTailX[i] == x && SnakeTailY[i] == y) {
+			GameOver = true;
+		}
+	}
+
+	if (x == fruitX && y == fruitY) {
+
+		score += 10;
+		fruitX = rand() % width;
+		fruitY = rand() % height;
+		nSnakeTail++;
+	}
 }
 
 int main() {
