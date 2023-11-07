@@ -1,12 +1,13 @@
 #pragma once
 #include "defines.h"
 
-class Board
-{
-	int width;
-	int height;
+class Board{
 public:
-	Board(int, int);
-	int getWidth() const;
-	int getHeight() const;
+    Board();
+    int getWidth() const;
+    int getHeight() const;
+
+private:
+    int width;
+    int height;
 };

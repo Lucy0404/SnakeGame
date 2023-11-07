@@ -1,13 +1,14 @@
 #pragma once
-class Fruits
-{
-	int x, y;
-	// Point position;
-public:
-	Fruits(int, int);
-	Fruits() = default;
-	Fruits(const Fruits&);
+#include "Board.h"
 
-	int getX() const { return x; }
-	int getY() const { return y; }
+class Fruits{
+public:
+    Fruits(const Board& board);
+    void Respawn(const Board& board);
+    int getX() const;
+    int getY() const;
+
+private:
+    int x;
+    int y;
 };

@@ -7,15 +7,17 @@
 class GameEngine
 {
 public:
-	Board board;
-	Snake snake;
-	Fruits apple;
-	Directions way;
+    GameEngine();
+    void RunGame();
 
-	bool GameOver; // is game over or not
+private:
+    Board board;
+    Snake snake;
+    Fruits apple;
+    Directions way;
+    bool GameOver;
 
-	GameEngine();
-	void DrawBoard();
-	void ProcessInput();
-	void UpdateGame();
+    void DrawBoard();
+    void ProcessInput();
+    void UpdateGame();
 };

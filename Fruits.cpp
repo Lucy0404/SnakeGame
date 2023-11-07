@@ -1,6 +1,22 @@
 #include "Fruits.h"
-Fruits::Fruits(int a, int b) : x(a), y(b) {
+#include <cstdlib>
+#include <ctime>
+
+Fruits::Fruits(const Board& board) {
+    Respawn(board);
 }
 
-Fruits::Fruits(const Fruits& fruit) : x(fruit.x), y(fruit.y) {
+void Fruits::Respawn(const Board& board) {
+    srand(static_cast<unsigned int>(time(0)));
+
+    x = rand() % board.getWidth();
+    y = rand() % board.getHeight();   
+}
+
+int Fruits::getX() const {
+    return x;
+}
+
+int Fruits::getY() const {
+    return y;
 }

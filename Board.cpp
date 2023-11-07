@@ -1,11 +1,11 @@
 #include "Board.h"
 
-Board::Board(int w, int h) : width(w), height(h) {
-}
+Board::Board() : width(WIDTH), height(HEIGHT) {}
 
 int Board::getWidth() const {
-	return width;
-};
+    return width;
+}
+
 int Board::getHeight() const {
-	return height;
-};
+    return height;
+}

@@ -1,11 +1,25 @@
 #pragma once
-class Snake
-{
-	int x, y;
-	// Point position;
-	// std::vector<Point> tail;
+#include <vector>
+#include "Fruits.h"
+#include "Board.h"
+
+class Snake{
 public:
-	Snake(int, int);
-	int getX() const { return x; }
-	int getY() const { return y; }
+    Snake(const Board& board);
+    int getX() const;
+    int getY() const;
+    int getTailLength() const;
+    int getTailX(int index) const;
+    int getTailY(int index) const;
+    int getScore() const;
+    void Move(Directions way, Fruits& apple, bool& GameOver, const Board& board);
+
+private:
+    int x;
+    int y;
+    int score;
+    int tailLength;
+    // usage of containers
+    std::vector<int> tailX;
+    std::vector<int> tailY;
 };

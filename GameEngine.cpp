@@ -4,76 +4,93 @@
 #include <windows.h>
 #include <conio.h>
 
-using namespace std;
+GameEngine::GameEngine() : board(), snake(board), apple(board), GameOver(false), way(STOP) {}
 
-GameEngine::GameEngine() : board(WIDTH, HEIGHT), snake(board.getHeight() / 2, board.getWidth() / 2) {
-	apple = Fruits(rand() % WIDTH, rand() % HEIGHT);
-	GameOver = false;
+void GameEngine::RunGame() {
+    // usage of std::string
+    std::string first = "Hello, player!";
+    std::string second = "Good luck and have fun, ";
+    std::string emptyString;
+    std::string name;
 
-	way = STOP;
+    std::cout << first << std::endl;
+    std::cout << emptyString << std::endl;
+    std::cout << "Introduce yourself: ";
+    std::cin >> name;
+    std::cout << emptyString << std::endl;
+    std::cout << second + name + " :)" << std::endl;
+    std::cout << emptyString << std::endl;
+
+    Sleep(3000);
+
+    while (!GameOver) {
+        DrawBoard();
+        ProcessInput();
+        UpdateGame();
+        Sleep(100);
+    }
 }
 
 void GameEngine::DrawBoard() {
-	system("cls");
-	for (int i = 0; i < board.getWidth() + 2; i++)
-		cout << "-";
-	cout << endl;
+    system("cls");
+    for (int i = 0; i < board.getWidth() + 2; i++)
+        std::cout << "-";
+    std::cout << std::endl;
 
-	for (int i = 0; i < board.getHeight(); i++) {
-		for (int j = 0; j < board.getWidth(); j++) {
-			if (j == 0)
-				cout << "|";
-			if (i == snake.getY() && j == snake.getX())
-				cout << "0";
-			else if (i == apple.getY() && j == apple.getX())
-				cout << "o";
-			else
-			{
-				bool print = false;
-				for (int k = 0; k < nSnakeTail; k++) {
+    for (int i = 0; i < board.getHeight(); i++) {
+        for (int j = 0; j < board.getWidth(); j++) {
+            if (j == 0)
+                std::cout << "|";
+            if (i == snake.getY() && j == snake.getX())
+                std::cout << "0";
+            else if (i == apple.getY() && j == apple.getX())
+                std::cout << "o";
+            else {
+                bool print = false;
+                for (int k = 0; k < snake.getTailLength(); k++) {
+                    if (snake.getTailX(k) == j && snake.getTailY(k) == i) {
+                        std::cout << "o";
+                        print = true;
+                    }
+                }
+                if (!print)
+                    std::cout << " ";
+            }
+            if (j == board.getWidth() - 1)
+                std::cout << "|";
+        }
+        std::cout << std::endl;
+    }
 
-					if (SnakeTailX[k] == j && SnakeTailY[k] == i) {
-						cout << "o";
-						print = true;
-					}
-				}
-				if (!print)
-					cout << " ";
-			}
-			if (j == board.getWidth() - 1)
-				cout << "|";
-		}
-		cout << endl;
-	}
-
-	for (int i = 0; i < board.getWidth() + 2; i++)
-		cout << "-";
-	cout << endl;
-	cout << "\nScore: " << score << endl;
+    for (int i = 0; i < board.getWidth() + 2; i++)
+        std::cout << "-";
+    std::cout << std::endl;
+    std::cout << "\nScore: " << snake.getScore() << std::endl;
 }
 
 void GameEngine::ProcessInput() {
-	if (_kbhit()) { //if keyboard key is pressed
-		switch (_getch()) {
-		case 'a':
-			way = LEFT;
-			break;
-		case 'd':
-			way = RIGHT;
-			break;
-		case 'w':
-			way = UP;
-			break;
-		case 's':
-			way = DOWN;
-			break;
-		case 'x':
-			GameOver = true;
-			break;
-		}
-	}
+    if (_kbhit()) { // if a key is pressed
+        char key = _getch();
+        switch (key) {
+        case 'a':
+            way = LEFT;
+            break;
+        case 'd':
+            way = RIGHT;
+            break;
+        case 'w':
+            way = UP;
+            break;
+        case 's':
+            way = DOWN;
+            break;
+        case 'x':
+            GameOver = true;
+            break;
+        }
+    }
 }
 
 void GameEngine::UpdateGame() {
-
+    snake.Move(way, apple, GameOver, board);
 }
