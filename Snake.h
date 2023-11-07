@@ -6,4 +6,6 @@ class Snake
 	// std::vector<Point> tail;
 public:
 	Snake(int, int);
+	int getX() const { return x; }
+	int getY() const { return y; }
 };

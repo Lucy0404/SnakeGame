@@ -7,4 +7,7 @@ public:
 	Fruits(int, int);
 	Fruits() = default;
 	Fruits(const Fruits&);
+
+	int getX() const { return x; }
+	int getY() const { return y; }
 };

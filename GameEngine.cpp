@@ -11,7 +11,6 @@ GameEngine::GameEngine() : board(WIDTH, HEIGHT), snake(board.getHeight() / 2, bo
 	GameOver = false;
 
 	way = STOP;
-
 }
 
 void GameEngine::DrawBoard() {
@@ -24,9 +23,9 @@ void GameEngine::DrawBoard() {
 		for (int j = 0; j < board.getWidth(); j++) {
 			if (j == 0)
 				cout << "|";
-			if (i == y && j == x)
+			if (i == snake.getY() && j == snake.getX())
 				cout << "0";
-			else if (i == fruitY && j == fruitX)
+			else if (i == apple.getY() && j == apple.getX())
 				cout << "o";
 			else
 			{

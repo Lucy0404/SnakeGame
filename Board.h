@@ -7,6 +7,6 @@ class Board
 	int height;
 public:
 	Board(int, int);
-	int getWidth();
-	int getHeight();
+	int getWidth() const;
+	int getHeight() const;
 };
