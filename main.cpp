@@ -81,7 +81,7 @@ void UpdateGame() {
 }
 
 int main() {
-	// использование строк std::string
+	// usage of std::string
 	std::string first = "Hello, player!";
 	std::string second = "Good luck and have fun, ";
 	std::string emptyString;
