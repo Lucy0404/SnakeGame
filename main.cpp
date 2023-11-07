@@ -1,6 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include <windows.h>
+#include <string>
 #include "main.h"
 
 void Initialize() {
@@ -80,6 +81,19 @@ void UpdateGame() {
 }
 
 int main() {
+	// использование строк std::string
+	std::string first = "Hello, player!";
+	std::string second = "Good luck and have fun, ";
+	std::string emptyString;
+	std::string name;
+
+	std::cout << first << std::endl;
+	std::cout << emptyString << std::endl;
+	std::cout << "Introduce yourself: ";
+	std::cin >> name;
+	std::cout << emptyString << std::endl;
+	std::cout << second + name + " :)" << std::endl;
+	std::cout << emptyString << std::endl;
 
 	Initialize();
 
