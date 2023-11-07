@@ -2,6 +2,8 @@
 #include <conio.h>
 #include <windows.h>
 #include <string>
+#include <vector>
+#include <algorithm>
 #include "main.h"
 
 void Initialize() {
