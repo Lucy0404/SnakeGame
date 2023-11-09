@@ -3,6 +3,7 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
+#include <string>
 
 GameEngine::GameEngine() : board(), snake(board), apple(board), GameOver(false), way(STOP) {}
 
@@ -21,7 +22,17 @@ void GameEngine::RunGame() {
     std::cout << second + name + " :)" << std::endl;
     std::cout << emptyString << std::endl;
 
-    Sleep(3000);
+    for (int i = 3; i >= 0; i--) {
+        std::cout << i << " ";
+        Sleep(1000); 
+    }
+
+    std::cout << emptyString << std::endl;
+    std::cout << emptyString << std::endl;
+
+    std::cout << "Let the game begin!" << std::endl;
+    
+    Sleep(1000);
 
     while (!GameOver) {
         DrawBoard();
