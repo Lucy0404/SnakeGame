@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include <vector> // for containers
 #include "Fruits.h"
 #include "Board.h"
 
@@ -12,6 +12,7 @@ public:
     int getTailX(int index) const;
     int getTailY(int index) const;
     int getScore() const;
+
     void Move(Directions way, Fruits& apple, bool& GameOver, const Board& board);
 
 private:

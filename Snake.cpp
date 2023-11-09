@@ -1,6 +1,7 @@
 #include "Snake.h"
 #include "Fruits.h"
 #include "Board.h"
+#include <algorithm>
 
 Snake::Snake(const Board& board) : x(board.getWidth() / 2), y(board.getHeight() / 2), score(0), tailLength(0) {}
 
@@ -29,11 +30,11 @@ int Snake::getScore() const {
 }
 
 void Snake::Move(Directions way, Fruits& apple, bool& GameOver, const Board& board) {
-    // Сохраняем предыдущую позицию головы
+    // Keep the previous head position
     int prevX = x;
     int prevY = y;
 
-    // Обновляем позицию головы в соответствии с выбранным направлением (way)
+    // Update the head position in accordance with the selected direction (way)
     switch (way) {
     case LEFT:
         x--;
@@ -51,7 +52,7 @@ void Snake::Move(Directions way, Fruits& apple, bool& GameOver, const Board& boa
         break;
     }
 
-    // Проверяем столкновение с границами и хвостом
+    // Checking for collisions with borders
     if (x < 0 || x >= board.getWidth() || y < 0 || y >= board.getHeight()) {
         GameOver = true;
     }
@@ -64,12 +65,19 @@ void Snake::Move(Directions way, Fruits& apple, bool& GameOver, const Board& boa
         prevX = prevTailX;
         prevY = prevTailY;
 
-        if (tailX[i] == x && tailY[i] == y) {
+        // Using STL find for horizontal tail collision test
+        auto collision = std::find(tailX.begin(), tailX.end(), x);
+        if (collision != tailX.end() && tailY[std::distance(tailX.begin(), collision)] == y) {
+            GameOver = true;
+        }
+
+        // Using STL find for vertical tail collision test
+        auto collisionY = std::find(tailY.begin(), tailY.end(), y);
+        if (collisionY != tailY.end() && tailX[std::distance(tailY.begin(), collisionY)] == x) {
             GameOver = true;
         }
     }
 
-    // Отрисовка головы 
     if (x == apple.getX() && y == apple.getY()) {
         score += 10;
         tailX.push_back(prevX);
