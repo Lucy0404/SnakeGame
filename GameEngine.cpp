@@ -5,8 +5,14 @@
 #include <conio.h>
 #include <string>
 
+/**
+ * @brief Constructor for the GameEngine class.
+ */
 GameEngine::GameEngine() : board(), snake(board), apple(board), GameOver(false), way(STOP) {}
 
+/**
+ * @brief Runs the game loop.
+ */
 void GameEngine::RunGame() {
     // usage of std::string
     std::string first = "Hello, player!";
@@ -42,6 +48,9 @@ void GameEngine::RunGame() {
     }
 }
 
+/**
+ * @brief Draws the game board on the console.
+ */
 void GameEngine::DrawBoard() {
     system("cls");
     for (int i = 0; i < board.getWidth() + 2; i++)
@@ -79,6 +88,9 @@ void GameEngine::DrawBoard() {
     std::cout << "\nScore: " << snake.getScore() << std::endl;
 }
 
+/**
+ * @brief Processes user input.
+ */
 void GameEngine::ProcessInput() {
     if (_kbhit()) { // if a key is pressed
         char key = _getch();
@@ -102,6 +114,9 @@ void GameEngine::ProcessInput() {
     }
 }
 
+/**
+ * @brief Updates the game state.
+ */
 void GameEngine::UpdateGame() {
     snake.Move(way, apple, GameOver, board);
 }

@@ -1,27 +1,26 @@
-# Определение компилятора и опций компиляции
-CC = cl
-CFLAGS = /EHsc
+CC = g++
+CFLAGS = -std=c++11 -Wall
+LDFLAGS = -lconio
 
-# Имя исполняемого файла
-TARGET = snake_game.exe
+SRCDIR = .
+OBJDIR = obj
+BINDIR = .
 
-# Список исходных файлов
-SRCS = main.cpp
+SOURCES = $(wildcard $(SRCDIR)/*.cpp)
+OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
+EXECUTABLE = $(BINDIR)/snake_game
 
-# Генерация имен объектных файлов
-OBJS = $(SRCS:.cpp=.obj)
+.PHONY: all clean
 
-# Цель для сборки всего проекта
-all: $(TARGET)
+all: $(EXECUTABLE)
 
-# Цель для сборки исполняемого файла
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) /Fe$(TARGET) $(OBJS)
+$(EXECUTABLE): $(OBJECTS)
+	@mkdir -p $(BINDIR)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
-# Правило для компиляции .cpp файлов в .obj файлы
-.cpp.obj:
-	$(CC) $(CFLAGS) /c $<
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	@mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Цель для очистки созданных объектных файлов и исполняемого файла
 clean:
-	del $(OBJS) $(TARGET)
+	rm -rf $(OBJDIR) $(EXECUTABLE)
