@@ -1,26 +1,35 @@
 CC = g++
-CFLAGS = -std=c++11 -Wall
-LDFLAGS = -lconio
+CFLAGS = -std=c++11
 
-SRCDIR = .
-OBJDIR = obj
-BINDIR = .
+# Исходные файлы
+SRC = main.cpp Board.cpp Fruits.cpp GameEngine.cpp Snake.cpp
 
-SOURCES = $(wildcard $(SRCDIR)/*.cpp)
-OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
-EXECUTABLE = $(BINDIR)/snake_game
+# Заголовочные файлы
+HEADERS = Board.h Fruits.h GameEngine.h Snake.h defines.h
 
-.PHONY: all clean
+# Библиотеки
+LIBS = libBoard.a libFruits.a libGameEngine.a libSnake.a
 
-all: $(EXECUTABLE)
+# Цель по умолчанию
+all: $(LIBS) game
 
-$(EXECUTABLE): $(OBJECTS)
-	@mkdir -p $(BINDIR)
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+# Создание библиотек
+libBoard.a: Board.o
+	ar rcs $@ $^
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	@mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+libFruits.a: Fruits.o
+	ar rcs $@ $^
 
+libGameEngine.a: GameEngine.o
+	ar rcs $@ $^
+
+libSnake.a: Snake.o
+	ar rcs $@ $^
+
+# Сборка основной программы
+game: $(SRC) $(HEADERS) $(LIBS)
+	$(CC) $(CFLAGS) -o $@ $(SRC) -L. -lBoard -lFruits -lGameEngine -lSnake
+
+# Очистка
 clean:
-	rm -rf $(OBJDIR) $(EXECUTABLE)
+	rm -f *.o *.a game
